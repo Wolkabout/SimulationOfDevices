@@ -1,0 +1,12 @@
+﻿global using Hangfire;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Newtonsoft.Json;
+global using SimulationOfDevices.Services.Common;
+global using SimulationOfDevices.Services.Common.Services;
+global using SimulationOfDevices.Services.Handlers.Simulation.Queries;
+global using SimulationOfDevices.Services.RabbitMQ;
+global using SimulationOfDevices.API.Contracts.Common;
+global using SimulationOfDevices.Services.Enums;
+global using SimulationOfDevices.Services.Models;
+global using ILogger = Serilog.ILogger;

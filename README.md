@@ -1,1 +1,1 @@
-# SimulationOfDevices
+# ReadFromOPCAndSendingDataToPlatform
