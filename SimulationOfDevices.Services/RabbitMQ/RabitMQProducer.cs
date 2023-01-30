@@ -43,7 +43,7 @@ namespace SimulationOfDevices.Services.RabbitMQ
                 while (!cancellationToken.IsCancellationRequested && await timer.WaitForNextTickAsync(cancellationToken))
                 {
                     timeLeft = timeLeft.Subtract(feedSettings.PublishRate);
-                    if (timeLeft == TimeSpan.Zero)                     
+                    if (timeLeft <= TimeSpan.Zero)            
                     {
                         break;
                     }
