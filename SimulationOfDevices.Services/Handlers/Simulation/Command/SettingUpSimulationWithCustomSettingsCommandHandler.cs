@@ -57,8 +57,8 @@ namespace SimulationOfDevices.Services.Handlers.Simulation.Command
                     _result.AddError(ErrorCode.NotFound, string.Format(ErrorMessages.SimulationDeviceNotFound, simulationDevice));
                     return _result;
                 }
-
-                var mappedDictionary = MapSettingsToDictionary(request.Settings.ToString());
+                bool repeatValueFromJson;
+                var mappedDictionary = MapSettingsToDictionary(request.Settings.ToString(), out repeatValueFromJson);
 
                 if (mappedDictionary is null)
                 {
@@ -107,7 +107,7 @@ namespace SimulationOfDevices.Services.Handlers.Simulation.Command
                             ReferenceKey = kpv.Key,
                             Duration = durationOfTheJob
                         });
-                    }   
+                    }
                 }
 
                 await _dataContext.SaveChangesAsync(cancellationToken);
@@ -118,19 +118,26 @@ namespace SimulationOfDevices.Services.Handlers.Simulation.Command
             {
                 await transaction.RollbackAsync(cancellationToken);
                 throw;
-            }            
+            }
         }
 
-        private Dictionary<string, List<JobParamatersModel>?>? MapSettingsToDictionary(string settings)
+        private Dictionary<string, List<JobParamatersModel>?>? MapSettingsToDictionary(string settings, out bool repeatValueFromJson)
         {
             var mappedData = JsonConvert.DeserializeObject<ExpandoObject>(settings, new ExpandoObjectConverter());
             var dynamicDictionary = new Dictionary<string, object>(mappedData);
+
+            var repeatValue = new object();
+            dynamicDictionary.TryGetValue("repeat", out repeatValue);
+            repeatValueFromJson = (repeatValue is null) ? false : (bool)repeatValue;
+            dynamicDictionary.Remove("repeat");
+
             Dictionary<string, List<JobParamatersModel>?>? mappedDictonary = new();
             //foreach (var item in dynamicDictionary)
             //{
             //    List<JobParamatersModel> jobParamaters = JsonConvert.DeserializeObject<List<JobParamatersModel>>(JsonConvert.SerializeObject(item.Value));
             //    mappedDictonary.Add(item.Key, jobParamaters);
             //}
+                    
             mappedDictonary = dynamicDictionary.ToDictionary(x => x.Key, x => JsonConvert.DeserializeObject<List<JobParamatersModel>>(JsonConvert.SerializeObject(x.Value)));
             return mappedDictonary;
         }

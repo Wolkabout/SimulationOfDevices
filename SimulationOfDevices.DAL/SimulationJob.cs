@@ -16,7 +16,7 @@ namespace SimulationOfDevices.DAL
         public DateTime UpdatedDate { get; set; }
         public int QueuePosition { get; set; }
         public string ReferenceKey { get; set; }
-
         public TimeSpan Duration { get; set; }
+        public bool Repeat { get; set; }
     }
 }

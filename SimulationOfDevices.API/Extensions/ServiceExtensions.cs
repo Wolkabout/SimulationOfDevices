@@ -172,17 +172,16 @@ namespace SendDataToPlatfomAPI.Extensions
                     string sFilePath = Path.GetFullPath(sFile);
 
                     var sqlScript = File.ReadAllText(sFilePath);
-                    
                     var countRow = dbContext.Database.ExecuteSqlRaw(sqlScript);
                     if (countRow == 0)
                     {
                         Log.Information("SQL tables already exist.");
-                        
+
                     }
-                    else 
+                    else
                     {
                         Log.Information("SQL tables created.");
-                    }                    
+                    }
                 }
             }
             catch (Exception)

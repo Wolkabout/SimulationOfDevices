@@ -15,5 +15,6 @@ CREATE TABLE IF NOT EXISTS `simulationjob` (
   `UpdatedDate` datetime NOT NULL,
   `ReferenceKey` varchar(30) NOT NULL,
   `Duration` time NOT NULL,
+  `Repeat` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
